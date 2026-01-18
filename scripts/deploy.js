@@ -1,5 +1,5 @@
-import 'dotenv/config';
-import { ethers } from "hardhat";
+require('dotenv').config();
+const { ethers } = require("hardhat");
 
 async function main() {
     const [deployer] = await ethers.getSigners();
