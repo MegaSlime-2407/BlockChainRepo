@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "hardhat test",
+    "test:vuln": "hardhat test test/Vulnerable-test.js",
+    "test:lending": "hardhat test test/LendingPool.test.js",
+    "attack": "hardhat run scripts/Attack.js",
+    "attack:fixed": "FIXED=1 hardhat run scripts/Attack.js",
+    "deploy": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:nft": "hardhat run scripts/deploy-nft.js --network localhost",
+    "deploy:lending": "hardhat run scripts/deploy-lending.js --network localhost"
   },
   "keywords": [],
   "author": "",

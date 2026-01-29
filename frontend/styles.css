@@ -29,6 +29,35 @@ header h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.15);
+    padding: 4px;
+    border-radius: 12px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+.tab-btn {
+    padding: 10px 24px;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+.tab-btn:hover { color: #fff; }
+.tab-btn.active {
+    background: white;
+    color: #667eea;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
 .wallet-status {
     display: flex;
     align-items: center;
@@ -222,6 +251,61 @@ header h1 {
     text-align: center;
     padding: 20px;
 }
+
+.tx-result { padding: 10px 0; }
+.tx-result p { margin: 8px 0; font-size: 0.9rem; }
+.tx-result-inline { font-size: 0.9rem; color: #22543d; margin-top: 8px; }
+.tx-hash {
+    display: inline-block;
+    word-break: break-all;
+    font-size: 0.85rem;
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.token-info { margin-bottom: 16px; }
+.token-info p { margin: 6px 0; font-size: 0.95rem; }
+
+.nft-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+.nft-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.nft-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fafafa;
+}
+.nft-card-inner { padding: 12px; }
+.nft-card-inner p { margin: 6px 0; font-size: 0.9rem; }
+.nft-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+}
+.you-badge {
+    background: #48bb78;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+.farmer-locked { border-left: 4px solid #e53e3e; }
+.farmer-locked h2 { color: #c53030; }
+.farmer-panel .card h2 { color: #38a169; }
+#farm-session-time, #farm-next-claim { font-weight: 600; }
 
 .error-message {
     background: #fed7d7;

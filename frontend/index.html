@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyToken dApp</title>
+    <title>My dApp – GMT, NFT, Farm, Lending</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>MyToken (MTK) dApp</h1>
+            <h1>My dApp</h1>
             <div id="wallet-status" class="wallet-status">
                 <span id="wallet-address">Not Connected</span>
                 <button id="connect-wallet-btn" class="btn btn-primary">Connect Wallet</button>
@@ -17,66 +17,163 @@
             </div>
         </header>
 
+        <div class="tabs">
+            <button id="tab-erc20" class="tab-btn active">GMT</button>
+            <button id="tab-erc721" class="tab-btn">NFTs</button>
+            <button id="tab-farming" class="tab-btn">Farming</button>
+            <button id="tab-lending" class="tab-btn">Lending</button>
+        </div>
+
         <main>
-            <div class="card">
-                <h2>Your Balance</h2>
-                <div class="balance-display">
-                    <span id="balance" class="balance-amount">0.00</span>
-                    <span class="token-symbol">MTK</span>
-                </div>
-                <div class="account-info">
-                    <p><strong>Account:</strong> <span id="account-address">-</span>
-                        <button id="switch-account-btn" class="btn-small" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem; display: none;">Switch Account</button>
-                    </p>
-                    <p><strong>Contract:</strong> <span id="contract-address">-</span> 
-                        <button id="change-contract-btn" class="btn-small" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">Change</button>
-                    </p>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>Transfer Tokens</h2>
-                <form id="transfer-form">
-                    <div class="form-group">
-                        <label for="recipient-address">Recipient Address</label>
-                        <input 
-                            type="text" 
-                            id="recipient-address" 
-                            placeholder="0x..." 
-                            required
-                            pattern="^0x[a-fA-F0-9]{40}$"
-                        >
+            <!-- ERC-20 Section -->
+            <section id="section-erc20" class="tab-content active">
+                <div class="card">
+                    <h2>GMT balance</h2>
+                    <div class="token-info">
+                        <p><strong>Name:</strong> <span id="token-name">-</span></p>
+                        <p><strong>Symbol:</strong> <span id="token-symbol">-</span></p>
                     </div>
-                    <div class="form-group">
-                        <label for="transfer-amount">Amount</label>
-                        <input 
-                            type="number" 
-                            id="transfer-amount" 
-                            placeholder="0.0" 
-                            step="0.000001"
-                            min="0"
-                            required
-                        >
+                    <div class="balance-display">
+                        <span id="balance" class="balance-amount">0.00</span>
+                        <span id="balance-symbol" class="token-symbol">-</span>
                     </div>
-                    <button type="submit" id="transfer-btn" class="btn btn-success" disabled>
-                        Transfer Tokens
-                    </button>
-                </form>
-            </div>
-
-            <div class="card">
-                <h2>Recent Transfers</h2>
-                <div id="transfer-events" class="events-list">
-                    <p class="no-events">No transfer events yet</p>
+                    <div class="account-info">
+                        <p><strong>GMT Contract:</strong> <span id="contract-address-erc20">-</span>
+                            <button id="change-contract-erc20-btn" class="btn-small">Change</button>
+                        </p>
+                    </div>
                 </div>
-            </div>
+
+                <div class="card">
+                    <h2>Send GMT</h2>
+                    <form id="transfer-form">
+                        <div class="form-group">
+                            <label for="recipient-address">Recipient Address</label>
+                            <input type="text" id="recipient-address" placeholder="0x..." required pattern="^0x[a-fA-F0-9]{40}$">
+                        </div>
+                        <div class="form-group">
+                            <label for="transfer-amount">Amount</label>
+                            <input type="number" id="transfer-amount" placeholder="0.0" step="0.000001" min="0" required>
+                        </div>
+                        <button type="submit" id="transfer-btn" class="btn btn-success" disabled>Send</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>Last tx</h2>
+                    <div id="tx-result" class="tx-result">
+                        <p class="no-events">no txs yet</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Recent transfers</h2>
+                    <div id="transfer-events" class="events-list">
+                        <p class="no-events">nothing yet</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ERC-721 Section -->
+            <section id="section-erc721" class="tab-content">
+                <div class="card">
+                    <h2>My NFTs</h2>
+                    <div class="token-info">
+                        <p><strong>Collection:</strong> <span id="nft-name">-</span> (<span id="nft-symbol">-</span>)</p>
+                        <p><strong>You have:</strong> <span id="nft-balance">0</span></p>
+                    </div>
+                    <div class="account-info">
+                        <p><strong>ERC-721 Contract:</strong> <span id="contract-address-erc721">-</span>
+                            <button id="change-contract-erc721-btn" class="btn-small">Change</button>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Your NFTs</h2>
+                    <div id="nft-owned-list" class="nft-grid">
+                        <p class="no-events">connect wallet + set NFT contract</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>All minted</h2>
+                    <div id="nft-minted-list" class="nft-list">
+                        <p class="no-events">connect + set contract</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Farming Section: requires GMT to unlock -->
+            <section id="section-farming" class="tab-content">
+                <div id="farmer-locked" class="card farmer-locked" style="display: none;">
+                    <h2>Locked</h2>
+                    <p>You need at least 1 <strong>GMT</strong> to use the farmer.</p>
+                    <p>Get GMT from the GMT tab (deployer has supply) or get a transfer.</p>
+                </div>
+                <div id="farmer-panel" class="farmer-panel" style="display: none;">
+                    <div class="card">
+                        <h2>Farm</h2>
+                        <div class="token-info">
+                            <p><strong>Your FARM balance:</strong> <span id="farm-balance">0</span> FARM</p>
+                            <p><strong>Reward per claim:</strong> <span id="farm-reward">10</span> FARM</p>
+                            <p><strong>Farm Contract:</strong> <span id="contract-address-farm">-</span>
+                                <button id="change-contract-farm-btn" class="btn-small">Change</button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>Harvest</h2>
+                        <p>Stay here 2 min to unlock claim. You need GMT to claim.</p>
+                        <p><strong>Time in Farmer:</strong> <span id="farm-session-time">0</span>s / 120s</p>
+                        <p><strong>Next claim:</strong> <span id="farm-next-claim">—</span></p>
+                        <button id="farm-claim-btn" class="btn btn-success" disabled>Claim FARM</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lending Pool -->
+            <section id="section-lending" class="tab-content">
+                <div class="card">
+                    <h2>Lending Pool</h2>
+                    <div class="account-info">
+                        <p><strong>Pool:</strong> <span id="contract-address-lending">Not set</span>
+                            <button id="change-contract-lending-btn" class="btn-small">Change</button>
+                        </p>
+                        <p><strong>Pool token:</strong> <span id="lending-token-symbol">—</span></p>
+                    </div>
+                    <div class="token-info">
+                        <p><strong>Total deposited:</strong> <span id="lending-total">—</span></p>
+                        <p><strong>Your deposit:</strong> <span id="lending-your-deposit">—</span></p>
+                        <p><strong>Your wallet (pool token):</strong> <span id="lending-wallet-balance">—</span></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Deposit</h2>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" id="lending-deposit-amount" placeholder="0">
+                        <button type="button" id="lending-deposit-btn" class="btn btn-success" disabled>Deposit</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Withdraw</h2>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" id="lending-withdraw-amount" placeholder="0">
+                        <button type="button" id="lending-withdraw-btn" class="btn btn-secondary" disabled>Withdraw</button>
+                    </div>
+                    <p id="lending-tx-result" class="tx-result-inline"></p>
+                </div>
+            </section>
 
             <div id="error-message" class="error-message" style="display: none;"></div>
             <div id="success-message" class="success-message" style="display: none;"></div>
         </main>
     </div>
 
-    <!-- Load ethers.js v6 library from CDN -->
     <script src="https://unpkg.com/ethers@6/dist/ethers.umd.min.js"></script>
     <script src="app.js"></script>
 </body>

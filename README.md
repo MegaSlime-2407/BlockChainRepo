@@ -1,13 +1,16 @@
-# Sample Hardhat Project
+# My Blockchain Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+This is my project for the blockchain course
+## How to run
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
+```bash
 npx hardhat test
-REPORT_GAS=true npx hardhat test
 npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
+npx hardhat run scripts/deploy.js --network localhost
+npx hardhat run scripts/deploy-lending.js --network localhost
+```
+## Re-entrancy exploit
+```bash
+npx hardhat run scripts/Attack.js          # exploits the vulnerable one
+FIXED=1 npx hardhat run scripts/Attack.js  # run against fixed (doesn't drain)
 ```
