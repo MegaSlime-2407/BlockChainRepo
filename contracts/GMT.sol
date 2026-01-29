@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -13,7 +12,6 @@ contract GMT is ERC20, Ownable {
         _mint(to, amount);
     }
 
-    // so MetaMask imports as token not NFT
     function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         if (interfaceId == 0x01ffc9a7) return true;
         if (interfaceId == 0x80ac58cd) return false;

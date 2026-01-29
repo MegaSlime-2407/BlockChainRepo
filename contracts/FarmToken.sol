@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -23,7 +22,6 @@ contract FarmToken is ERC20 {
         cooldownSeconds = _cooldownSeconds;
     }
 
-    // need to hold GMT and wait for cooldown, then you get FARM
     function claim() external {
         require(gmt.balanceOf(msg.sender) >= minGmtRequired, "FarmToken: need GMT");
         require(
