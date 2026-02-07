@@ -11,8 +11,7 @@ const { ethers } = require("hardhat");
 async function main() {
     const nftAddress = process.env.NFT_ADDRESS;
     if (!nftAddress) {
-        console.error("Set NFT_ADDRESS (your MyNFT contract address). Example:");
-        console.error('  NFT_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3 npx hardhat run scripts/mint-nft.js --network localhost');
+        console.error("Set NFT_ADDRESS");
         process.exitCode = 1;
         return;
     }
@@ -26,7 +25,7 @@ async function main() {
     await tx.wait();
     const newId = await nft.tokenIdCounter();
 
-    console.log("Mint successful.");
+    console.log("Mint successful");
     console.log("  Recipient:", recipient);
     console.log("  Token ID:", Number(newId) - 1);
     console.log("  URI:", uri);

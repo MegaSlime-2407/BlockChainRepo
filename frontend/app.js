@@ -82,7 +82,7 @@ const tabGame = document.getElementById('tab-game');
 const sectionGame = document.getElementById('section-game');
 const gameLockedEl = document.getElementById('game-locked');
 const gamePanelEl = document.getElementById('game-panel');
-const gameGmtBalanceEl = document.getElementById('game-gmt-balance');
+const gameGmtBalanceEl = document.getElementById('user-gmt');
 const gameClickBtn = document.getElementById('game-click-btn');
 const gamePointsEl = document.getElementById('game-points');
 
@@ -135,6 +135,7 @@ function setTab(name) {
     if (name === 'erc20') {
         tabErc20.classList.add('active');
         sectionErc20.classList.add('active');
+        if (contractERC20 && userAddress) updateBalanceERC20();
     } else if (name === 'erc721') {
         tabErc721.classList.add('active');
         sectionErc721.classList.add('active');
@@ -174,6 +175,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (CONTRACT_ADDRESS_ERC20) {
         contractAddressErc20El.textContent = CONTRACT_ADDRESS_ERC20;
         localStorage.setItem('contractAddressERC20', CONTRACT_ADDRESS_ERC20);
+    } else {
+        contractAddressErc20El.textContent = 'Not set';
+        balanceEl.textContent = '—';
     }
     if (CONTRACT_ADDRESS_ERC721) {
         contractAddressErc721El.textContent = CONTRACT_ADDRESS_ERC721;
@@ -677,13 +681,11 @@ async function updateBalanceERC20() {
     if (!contractERC20 || !userAddress) return;
     try {
         const [balance, decimals] = await Promise.all([contractERC20.balanceOf(userAddress), contractERC20.decimals()]);
-        const fmt = parseFloat(ethers.formatUnits(balance, decimals)).toFixed(6);
-        balanceEl.textContent = fmt;
-        gameGmtBalanceEl.textContent = fmt;
-
+        const formatted = parseFloat(ethers.formatUnits(balance, decimals)).toFixed(6);
+        balanceEl.textContent = formatted;
+        if (gameGmtBalanceEl) gameGmtBalanceEl.textContent = formatted;
         await refreshGameUI();
     } catch (e) { console.warn('Balance update failed:', e); }
-    
 }
 
 function setupTransferEventListener() {
