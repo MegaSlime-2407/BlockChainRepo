@@ -12,7 +12,7 @@ async function main() {
     await cf.waitForDeployment();
 
     console.log("Crowdfunding deployed to:", cf.target);
-    console.log("GMT:", GMT_ADDRESS);
+    console.log("GMT: ", GMT_ADDRESS);
 }
 
 main().catch((e) => { console.error(e); process.exitCode = 1; });
