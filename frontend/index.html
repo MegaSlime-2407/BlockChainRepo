@@ -1,203 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My dApp – GMT, NFT, Farm, Lending</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>GoldMine | Early Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Ethers.js -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.umd.min.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>My dApp</h1>
-            <div id="wallet-status" class="wallet-status">
-                <span id="wallet-address">Not Connected</span>
-                <button id="connect-wallet-btn" class="btn btn-primary">Connect Wallet</button>
-                <button id="disconnect-wallet-btn" class="btn btn-secondary" style="display: none;">Disconnect</button>
-            </div>
-        </header>
 
-        <div class="tabs">
-            <button id="tab-erc20" class="tab-btn active">GMT</button>
-            <button id="tab-erc721" class="tab-btn">NFTs</button>
-            <button id="tab-farming" class="tab-btn">Farming</button>
-            <button id="tab-lending" class="tab-btn">Lending</button>
-            <button id="tab-game" class="tab-btn">Game</button>
+<!-- HERO -->
+<section class="hero">
+  <div class="overlay"></div>
+  <div class="hero-text">
+    <h1>PLAY BEFORE RELEASE</h1>
+    <p>Support game development and get exclusive beta access</p>
+    <span class="tag">ETHEREUM TESTNET · QUEEN TEAM</span>
+  </div>
+</section>
+
+<!-- WALLET -->
+<section class="games">
+  <h2>Wallet</h2>
+
+  <button id="connectBtn">Connect MetaMask</button>
+
+  <p><b>Address:</b> <span id="walletAddress">—</span></p>
+  <p><b>Network:</b> <span id="network">—</span></p>
+  <p><b>ETH Balance:</b> <span id="ethBalance">—</span></p>
+  <p><b>Reward Token Balance:</b> <span id="tokenBalance">—</span></p>
+
+  <p id="txStatus"></p>
+</section>
+
+<!-- GAMES -->
+<section class="games">
+  <h2>Early Access Games</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <img src="images/atomic.jpg">
+      <div class="content">
+        <h3>Atomic Heart 2</h3>
+        <p>Retro-futuristic action game.</p>
+        <div class="bottom">
+          <span>0.05 ETH</span>
+          <button class="buy-btn" data-campaign="0" data-price="0.05">
+            BUY EARLY ACCESS
+          </button>
         </div>
-
-        <main>
-            <!-- ERC-20 Section -->
-            <section id="section-erc20" class="tab-content active">
-                <div class="card">
-                    <h2>GMT balance</h2>
-                    <div class="token-info">
-                        <p><strong>Name:</strong> <span id="token-name">-</span></p>
-                        <p><strong>Symbol:</strong> <span id="token-symbol">-</span></p>
-                    </div>
-                    <div class="balance-display">
-                        <span id="balance" class="balance-amount">0.00</span>
-                        <span id="balance-symbol" class="token-symbol">-</span>
-                    </div>
-                    <div class="account-info">
-                        <p><strong>GMT Contract:</strong> <span id="contract-address-erc20">-</span>
-                            <button id="change-contract-erc20-btn" class="btn-small">Change</button>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Send GMT</h2>
-                    <form id="transfer-form">
-                        <div class="form-group">
-                            <label for="recipient-address">Recipient Address</label>
-                            <input type="text" id="recipient-address" placeholder="0x..." required pattern="^0x[a-fA-F0-9]{40}$">
-                        </div>
-                        <div class="form-group">
-                            <label for="transfer-amount">Amount</label>
-                            <input type="number" id="transfer-amount" placeholder="0.0" step="0.000001" min="0" required>
-                        </div>
-                        <button type="submit" id="transfer-btn" class="btn btn-success" disabled>Send</button>
-                    </form>
-                </div>
-
-                <div class="card">
-                    <h2>Last tx</h2>
-                    <div id="tx-result" class="tx-result">
-                        <p class="no-events">no txs yet</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Recent transfers</h2>
-                    <div id="transfer-events" class="events-list">
-                        <p class="no-events">nothing yet</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ERC-721 Section -->
-            <section id="section-erc721" class="tab-content">
-                <div class="card">
-                    <h2>My NFTs</h2>
-                    <div class="token-info">
-                        <p><strong>Collection:</strong> <span id="nft-name">-</span> (<span id="nft-symbol">-</span>)</p>
-                        <p><strong>You have:</strong> <span id="nft-balance">0</span></p>
-                    </div>
-                    <div class="account-info">
-                        <p><strong>ERC-721 Contract:</strong> <span id="contract-address-erc721">-</span>
-                            <button id="change-contract-erc721-btn" class="btn-small">Change</button>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Your NFTs</h2>
-                    <div id="nft-owned-list" class="nft-grid">
-                        <p class="no-events">connect wallet + set NFT contract</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>All minted</h2>
-                    <div id="nft-minted-list" class="nft-list">
-                        <p class="no-events">connect + set contract</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Farming Section: requires GMT to unlock -->
-            <section id="section-farming" class="tab-content">
-                <div id="farmer-locked" class="card farmer-locked" style="display: none;">
-                    <h2>Locked</h2>
-                    <p>You need at least 1 <strong>GMT</strong> to use the farmer.</p>
-                    <p>Get GMT from the GMT tab (deployer has supply) or get a transfer.</p>
-                </div>
-                <div id="farmer-panel" class="farmer-panel" style="display: none;">
-                    <div class="card">
-                        <h2>Farm</h2>
-                        <div class="token-info">
-                            <p><strong>Your FARM balance:</strong> <span id="farm-balance">0</span> FARM</p>
-                            <p><strong>Reward per claim:</strong> <span id="farm-reward">10</span> FARM</p>
-                            <p><strong>Farm Contract:</strong> <span id="contract-address-farm">-</span>
-                                <button id="change-contract-farm-btn" class="btn-small">Change</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h2>Harvest</h2>
-                        <p>Stay here 2 min to unlock claim. You need GMT to claim.</p>
-                        <p><strong>Time in Farmer:</strong> <span id="farm-session-time">0</span>s / 120s</p>
-                        <p><strong>Next claim:</strong> <span id="farm-next-claim">—</span></p>
-                        <button id="farm-claim-btn" class="btn btn-success" disabled>Claim FARM</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Lending Pool -->
-            <section id="section-lending" class="tab-content">
-                <div class="card">
-                    <h2>Lending Pool</h2>
-                    <div class="account-info">
-                        <p><strong>Pool:</strong> <span id="contract-address-lending">Not set</span>
-                            <button id="change-contract-lending-btn" class="btn-small">Change</button>
-                        </p>
-                        <p><strong>Pool token:</strong> <span id="lending-token-symbol">—</span></p>
-                    </div>
-                    <div class="token-info">
-                        <p><strong>Total deposited:</strong> <span id="lending-total">—</span></p>
-                        <p><strong>Your deposit:</strong> <span id="lending-your-deposit">—</span></p>
-                        <p><strong>Your wallet (pool token):</strong> <span id="lending-wallet-balance">—</span></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Deposit</h2>
-                    <div class="form-group">
-                        <label>Amount</label>
-                        <input type="text" id="lending-deposit-amount" placeholder="0">
-                        <button type="button" id="lending-deposit-btn" class="btn btn-success" disabled>Deposit</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Withdraw</h2>
-                    <div class="form-group">
-                        <label>Amount</label>
-                        <input type="text" id="lending-withdraw-amount" placeholder="0">
-                        <button type="button" id="lending-withdraw-btn" class="btn btn-secondary" disabled>Withdraw</button>
-                    </div>
-                    <p id="lending-tx-result" class="tx-result-inline"></p>
-                </div>
-            </section>
-
-            <!-- Game Section -->
-             <section id="section-game" class="tab-content">
-                <div class="card">
-                    <h2>Game</h2>
-                    <p>Game coming soon! Stay tuned.</p>
-                    <p><b>Your GMT:</b> <span id="user-gmt">0</span></p>
-                </div>
-
-                <div id="game-locked" class="card" style="display: none;">
-                    <h2>Locked</h2>
-                    <p>You need at least 1 GMT to unlock the game.</p>
-                    <p>Get GMT from the GMT tab (deployer has supply) or get a transfer.</p>
-                </div>
-
-                <div id="game-panel" class="card" style="display: none;">
-                    <h2>Game Unlocked</h2>
-                    <p>Game content will be here once you have GMT!</p>
-                    <button id="play-game-btn" class="btn btn-success">Play Game</button>
-                    <p style="margin-top: 10px;"><b>Points:</b> <span id="game-points">0</span></p>
-                </div>
-            </section>
-
-            <div id="error-message" class="error-message" style="display: none;"></div>
-            <div id="success-message" class="success-message" style="display: none;"></div>
-        </main>
+      </div>
     </div>
 
-    <script src="https://unpkg.com/ethers@6/dist/ethers.umd.min.js"></script>
-    <script src="app.js"></script>
+    <div class="card">
+      <img src="images/GTA_VI_Poster.jpg">
+      <div class="content">
+        <h3>GTA VI</h3>
+        <p>Open-world crime action game.</p>
+        <div class="bottom">
+          <span>0.07 ETH</span>
+          <button class="buy-btn" data-campaign="1" data-price="0.07">
+            BUY EARLY ACCESS
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/resident.jpg">
+      <div class="content">
+        <h3>Resident Evil: Requiem</h3>
+        <p>Survival horror experience.</p>
+        <div class="bottom">
+          <span>0.05 ETH</span>
+          <button class="buy-btn" data-campaign="2" data-price="0.05">
+            BUY EARLY ACCESS
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+        <img src="images/od.jpg" alt="Iron Dominion">
+        <div class="content">
+            <h3>OD Knock</h3>
+            <p>Psychological horror game filled with fear, darkness, and survival.</p>            
+          <div class="bottom">
+            <span>0.04 ETH</span>
+            <button>BUY EARLY ACCESS</button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <img src="images/warhammer.jpg" alt="Iron Dominion">
+        <div class="content">
+            <h3>Warhammer</h3>
+            <p>Brutal war strategy inspired by the dark Warhammer universe.</p>            
+          <div class="bottom">
+            <span>0.02 ETH</span>
+            <button>BUY EARLY ACCESS</button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <img src="images/wolverine.jpg" alt="Iron Dominion">
+        <div class="content">
+          <h3>Marvel's Wolverine</h3>
+          <p>Action-packed game inspired by Marvel's Wolverine and brutal close combat.</p>
+          <div class="bottom">
+            <span>0.03 ETH</span>
+            <button>BUY EARLY ACCESS</button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+  </div>
+</section>
+
+<!-- CREATE CAMPAIGN -->
+<section class="games">
+  <h2>Create Campaign</h2>
+
+  <input id="title" placeholder="Game title">
+  <input id="goal" placeholder="Goal (ETH)">
+  <input id="duration" placeholder="Duration (seconds)">
+  <button id="createCampaignBtn">Create Campaign</button>
+</section>
+
+<footer class="footer">
+  GoldMine Early Access Platform · Ethereum Testnet Only
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>

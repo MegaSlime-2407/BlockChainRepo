@@ -1,7 +1,7 @@
 {
   "name": "hardhat-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is my project for the blockchain course\r ## How to run",
   "main": "index.js",
   "scripts": {
     "test": "hardhat test",
@@ -20,10 +20,21 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
     "@nomiclabs/hardhat-etherscan": "^3.1.8",
-    "hardhat": "^2.28.3"
+    "hardhat": "^2.28.4"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.4.0",
     "dotenv": "^17.2.3"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MegaSlime-2407/BlockChainRepo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MegaSlime-2407/BlockChainRepo/issues"
+  },
+  "homepage": "https://github.com/MegaSlime-2407/BlockChainRepo#readme"
 }
