@@ -22,6 +22,7 @@
             <button id="tab-erc721" class="tab-btn">NFTs</button>
             <button id="tab-farming" class="tab-btn">Farming</button>
             <button id="tab-lending" class="tab-btn">Lending</button>
+            <button id="tab-game" class="tab-btn">Game</button>
         </div>
 
         <main>
@@ -166,6 +167,28 @@
                         <button type="button" id="lending-withdraw-btn" class="btn btn-secondary" disabled>Withdraw</button>
                     </div>
                     <p id="lending-tx-result" class="tx-result-inline"></p>
+                </div>
+            </section>
+
+            <!-- Game Section -->
+             <section id="section-game" class="tab-content">
+                <div class="card">
+                    <h2>Game</h2>
+                    <p>Game coming soon! Stay tuned.</p>
+                    <p><b>Your GMT:</b> <span id="user-gmt">0</span></p>
+                </div>
+
+                <div id="game-locked" class="card" style="display: none;">
+                    <h2>Locked</h2>
+                    <p>You need at least 1 GMT to unlock the game.</p>
+                    <p>Get GMT from the GMT tab (deployer has supply) or get a transfer.</p>
+                </div>
+
+                <div id="game-panel" class="card" style="display: none;">
+                    <h2>Game Unlocked</h2>
+                    <p>Game content will be here once you have GMT!</p>
+                    <button id="play-game-btn" class="btn btn-success">Play Game</button>
+                    <p style="margin-top: 10px;"><b>Points:</b> <span id="game-points">0</span></p>
                 </div>
             </section>
 

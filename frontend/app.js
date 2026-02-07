@@ -41,6 +41,7 @@ let CONTRACT_ADDRESS_ERC721 = '';
 let CONTRACT_ADDRESS_FARM = '';
 let CONTRACT_ADDRESS_LENDING = '';
 
+
 let provider = null;
 let signer = null;
 let contractERC20 = null;
@@ -56,6 +57,7 @@ let contractCheckedFarm = false;
 let contractCheckedLending = false;
 let farmingTabOpenedAt = 0;
 let farmingInterval = null;
+let gamePoints = 0;
 
 // DOM refs
 const connectWalletBtn = document.getElementById('connect-wallet-btn');
@@ -76,6 +78,13 @@ const changeContractFarmBtn = document.getElementById('change-contract-farm-btn'
 const farmSessionTimeEl = document.getElementById('farm-session-time');
 const farmNextClaimEl = document.getElementById('farm-next-claim');
 const farmClaimBtn = document.getElementById('farm-claim-btn');
+const tabGame = document.getElementById('tab-game');
+const sectionGame = document.getElementById('section-game');
+const gameLockedEl = document.getElementById('game-locked');
+const gamePanelEl = document.getElementById('game-panel');
+const gameGmtBalanceEl = document.getElementById('game-gmt-balance');
+const gameClickBtn = document.getElementById('game-click-btn');
+const gamePointsEl = document.getElementById('game-points');
 
 // ERC-20
 const tokenNameEl = document.getElementById('token-name');
@@ -120,7 +129,7 @@ const lendingTxResultEl = document.getElementById('lending-tx-result');
 
 // --- Tabs ---
 function setTab(name) {
-    [tabErc20, tabErc721, tabFarming, tabLending].forEach(t => t.classList.remove('active'));
+    [tabErc20, tabErc721, tabFarming, tabLending, tabGame].forEach(t => t.classList.remove('active'));
     [sectionErc20, sectionErc721, sectionFarming, sectionLending].forEach(s => s.classList.remove('active'));
     if (farmingInterval) { clearInterval(farmingInterval); farmingInterval = null; }
     if (name === 'erc20') {
@@ -140,12 +149,17 @@ function setTab(name) {
         tabLending.classList.add('active');
         sectionLending.classList.add('active');
         refreshLendingUI();
+    } else if (name === 'game') {
+        tabGame.classList.add('active');
+        sectionGame.classList.add('active');
+        refreshGameUI();
     }
 }
 tabErc20.addEventListener('click', () => setTab('erc20'));
 tabErc721.addEventListener('click', () => setTab('erc721'));
 tabFarming.addEventListener('click', () => setTab('farming'));
 tabLending.addEventListener('click', () => setTab('lending'));
+tabGame.addEventListener('click', () => setTab('game'));
 
 // --- Init ---
 document.addEventListener('DOMContentLoaded', async () => {
@@ -184,6 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } catch (e) { console.warn('Network check failed:', e); }
         await connectWallet();
+
     }
 
     if (!CONTRACT_ADDRESS_ERC20) {
@@ -206,6 +221,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     farmClaimBtn.addEventListener('click', handleFarmClaim);
     lendingDepositBtn.addEventListener('click', handleLendingDeposit);
     lendingWithdrawBtn.addEventListener('click', handleLendingWithdraw);
+    await refreshGameUI();
 });
 
 function changeContract(type) {
@@ -662,7 +678,9 @@ async function updateBalanceERC20() {
     try {
         const [balance, decimals] = await Promise.all([contractERC20.balanceOf(userAddress), contractERC20.decimals()]);
         balanceEl.textContent = parseFloat(ethers.formatUnits(balance, decimals)).toFixed(6);
+        gameGmtBalanceEl.textContent = parseFloat(ethers.formatUnits(balance, decimals)).toFixed(6);
     } catch (e) { console.warn('Balance update failed:', e); }
+    
 }
 
 function setupTransferEventListener() {
@@ -727,6 +745,44 @@ async function handleTransfer(e) {
         transferAmountInput.value = '';
         setTimeout(hideMessages, 5000);
     } catch (err) { handleError(err); } finally { transferBtn.disabled = false; transferBtn.textContent = 'Send'; }
+}
+
+function initGame() {
+    if (!gameClickBtn) return;
+    gameClickBtn.addEventListener('click', () => {
+        gamePoints += 1;
+        gamePointsEl.textContent = String(gamePoints);
+    });
+}
+
+async function refreshGameUI() {
+    if (!gameLockedEl || !gamePanelEl || !gameGmtBalanceEl) return;
+
+    if (!contractERC20 || !userAddress) {
+        gameGmtBalanceEl.textContent = "0";
+        gameLockedEl.style.display = 'block';
+        gamePanelEl.style.display = 'none';
+        return;
+    }
+
+    try {
+        const [bal, dec] = await Promise.all([contractERC20.balanceOf(userAddress), contractERC20.decimals()]);
+        
+        const balNum = Number(ethers.formatUnits(bal, dec));
+        gameGmtBalanceEl.textContent = balNum.toFixed(6);
+
+        if (balNum > 0) {
+            gameLockedEl.style.display = 'none';
+            gamePanelEl.style.display = 'block';
+        } else {
+            gameLockedEl.style.display = 'block';
+            gamePanelEl.style.display = 'none';
+        }
+    } catch (e) {
+        console.warn('Game UI refresh failed:', e);
+        gameLockedEl.style.display = 'block';
+        gamePanelEl.style.display = 'none';
+    }
 }
 
 function handleError(err) {
