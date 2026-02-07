@@ -14,6 +14,12 @@ async function main() {
     const farm = await FarmToken.deploy(gmt.target, ethers.parseUnits("1", 18), ethers.parseUnits("10", 18), 300);
     await farm.waitForDeployment();
     console.log("Farm:", farm.target, "(need 1 GMT, 10 FARM/claim, 300s cooldown)");
+
+    const RewardToken = await ethers.getContractFactory("RewardToken");
+    const rewardToken = await RewardToken.deploy();
+    await rewardToken.waitForDeployment();
+    const price = await rewardToken.pricePerToken();
+    console.log("RewardToken (GMAT):", rewardToken.target, "- Price:", ethers.formatEther(price), "ETH per token");
 }
 
 main().catch((error) => {

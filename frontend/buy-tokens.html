@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Buy Tokens | GoldMine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Ethers.js -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.umd.min.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">GoldMine</a>
+    <div class="nav-links">
+      <a href="index.html">Games</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="buy-tokens.html" class="active">Buy Tokens</a>
+      <a href="funding.html">Funding</a>
+    </div>
+  </div>
+</nav>
+
+<!-- BUY TOKENS SECTION -->
+<section class="games">
+  <h2>Buy GMAT Tokens</h2>
+  
+  <div class="buy-tokens-card">
+    <p class="description">Spend ETH to get GMAT (GoldMine Access Token). Hold GMAT tokens to unlock games.</p>
+    
+    <div class="price-info">
+      <p><b>Price:</b> <span id="gameTokenPrice">—</span> ETH per 1 GMAT</p>
+    </div>
+
+    <div class="buy-form">
+      <label for="buyEthAmount">ETH Amount</label>
+      <input type="text" id="buyEthAmount" placeholder="Enter ETH amount (e.g. 0.01)" />
+      <button id="buyGameTokensBtn" disabled>Buy GMAT Tokens</button>
+    </div>
+
+    <div id="txStatus"></div>
+
+    <div class="info-box">
+      <h3>How it works:</h3>
+      <ul>
+        <li>Connect your MetaMask wallet</li>
+        <li>Enter the amount of ETH you want to spend</li>
+        <li>Click "Buy GMAT Tokens" to purchase</li>
+        <li>More GMAT = More games unlocked!</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  GoldMine Early Access Platform · Ethereum Testnet Only
+</footer>
+
+<script src="utils.js"></script>
+<script src="buy-tokens.js"></script>
+</body>
+</html>

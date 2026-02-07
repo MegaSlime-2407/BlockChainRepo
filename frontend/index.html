@@ -16,6 +16,19 @@
 </head>
 <body>
 
+<!-- NAVIGATION -->
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">GoldMine</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Games</a>
+      <a href="wallet.html">Wallet</a>
+      <a href="buy-tokens.html">Buy Tokens</a>
+      <a href="funding.html">Funding</a>
+    </div>
+  </div>
+</nav>
+
 <!-- HERO -->
 <section class="hero">
   <div class="overlay"></div>
@@ -26,18 +39,17 @@
   </div>
 </section>
 
-<!-- WALLET -->
-<section class="games">
-  <h2>Wallet</h2>
-
-  <button id="connectBtn">Connect MetaMask</button>
-
-  <p><b>Address:</b> <span id="walletAddress">—</span></p>
-  <p><b>Network:</b> <span id="network">—</span></p>
-  <p><b>ETH Balance:</b> <span id="ethBalance">—</span></p>
-  <p><b>Reward Token Balance:</b> <span id="tokenBalance">—</span></p>
-
-  <p id="txStatus"></p>
+<!-- GAME ACCESS -->
+<section class="games" id="gameAccessSection">
+  <h2>Game Access</h2>
+  <div id="gameLocked">
+    <p>You need at least <b>1 GMAT</b> token to access games.</p>
+    <p><a href="buy-tokens.html" style="color: #00ffc8; text-decoration: underline;">Buy GMAT tokens</a> to unlock games!</p>
+  </div>
+  <div id="gameUnlocked" style="display: none;">
+    <p><b>You have access.</b></p>
+    <p>Check the games below to see which ones you can play!</p>
+  </div>
 </section>
 
 <!-- GAMES -->
@@ -46,86 +58,101 @@
 
   <div class="cards">
 
-    <div class="card">
+    <div class="card" data-game="atomic" data-required-gmat="50">
       <img src="images/atomic.jpg">
       <div class="content">
         <h3>Atomic Heart 2</h3>
         <p>Retro-futuristic action game.</p>
+        <div class="game-lock-indicator" style="display: none;">🔒 Locked</div>
+        <div class="game-unlock-indicator" style="display: none;">✅ Unlocked</div>
         <div class="bottom">
-          <span>0.05 ETH</span>
-          <button class="buy-btn" data-campaign="0" data-price="0.05">
-            BUY EARLY ACCESS
+          <span>0.05 ETH · Requires 50 GMAT</span>
+          <button class="play-game-btn" data-game="atomic" data-required-gmat="50" disabled>
+            PLAY GAME
           </button>
         </div>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-game="gta" data-required-gmat="70">
       <img src="images/GTA_VI_Poster.jpg">
       <div class="content">
         <h3>GTA VI</h3>
         <p>Open-world crime action game.</p>
+        <div class="game-lock-indicator" style="display: none;">🔒 Locked</div>
+        <div class="game-unlock-indicator" style="display: none;">✅ Unlocked</div>
         <div class="bottom">
-          <span>0.07 ETH</span>
-          <button class="buy-btn" data-campaign="1" data-price="0.07">
-            BUY EARLY ACCESS
+          <span>0.07 ETH · Requires 70 GMAT</span>
+          <button class="play-game-btn" data-game="gta" data-required-gmat="70" disabled>
+            PLAY GAME
           </button>
         </div>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-game="resident" data-required-gmat="50">
       <img src="images/resident.jpg">
       <div class="content">
         <h3>Resident Evil: Requiem</h3>
         <p>Survival horror experience.</p>
+        <div class="game-lock-indicator" style="display: none;">🔒 Locked</div>
+        <div class="game-unlock-indicator" style="display: none;">✅ Unlocked</div>
         <div class="bottom">
-          <span>0.05 ETH</span>
-          <button class="buy-btn" data-campaign="2" data-price="0.05">
-            BUY EARLY ACCESS
+          <span>0.05 ETH · Requires 50 GMAT</span>
+          <button class="play-game-btn" data-game="resident" data-required-gmat="50" disabled>
+            PLAY GAME
           </button>
         </div>
       </div>
     </div>
 
-
-    <div class="card">
-        <img src="images/od.jpg" alt="Iron Dominion">
-        <div class="content">
-            <h3>OD Knock</h3>
-            <p>Psychological horror game filled with fear, darkness, and survival.</p>            
-          <div class="bottom">
-            <span>0.04 ETH</span>
-            <button>BUY EARLY ACCESS</button>
-          </div>
+    <div class="card" data-game="od" data-required-gmat="40">
+      <img src="images/od.jpg" alt="OD Knock">
+      <div class="content">
+        <h3>OD Knock</h3>
+        <p>Psychological horror game filled with fear, darkness, and survival.</p>
+        <div class="game-lock-indicator" style="display: none;">🔒 Locked</div>
+        <div class="game-unlock-indicator" style="display: none;">✅ Unlocked</div>
+        <div class="bottom">
+          <span>0.04 ETH · Requires 40 GMAT</span>
+          <button class="play-game-btn" data-game="od" data-required-gmat="40" disabled>
+            PLAY GAME
+          </button>
         </div>
       </div>
+    </div>
 
-
-      <div class="card">
-        <img src="images/warhammer.jpg" alt="Iron Dominion">
-        <div class="content">
-            <h3>Warhammer</h3>
-            <p>Brutal war strategy inspired by the dark Warhammer universe.</p>            
-          <div class="bottom">
-            <span>0.02 ETH</span>
-            <button>BUY EARLY ACCESS</button>
-          </div>
+    <div class="card" data-game="warhammer" data-required-gmat="20">
+      <img src="images/warhammer.jpg" alt="Warhammer">
+      <div class="content">
+        <h3>Warhammer</h3>
+        <p>Brutal war strategy inspired by the dark Warhammer universe.</p>
+        <div class="game-lock-indicator" style="display: none;">🔒 Locked</div>
+        <div class="game-unlock-indicator" style="display: none;">✅ Unlocked</div>
+        <div class="bottom">
+          <span>0.02 ETH · Requires 20 GMAT</span>
+          <button class="play-game-btn" data-game="warhammer" data-required-gmat="20" disabled>
+            PLAY GAME
+          </button>
         </div>
       </div>
+    </div>
 
-
-      <div class="card">
-        <img src="images/wolverine.jpg" alt="Iron Dominion">
-        <div class="content">
-          <h3>Marvel's Wolverine</h3>
-          <p>Action-packed game inspired by Marvel's Wolverine and brutal close combat.</p>
-          <div class="bottom">
-            <span>0.03 ETH</span>
-            <button>BUY EARLY ACCESS</button>
-          </div>
+    <div class="card" data-game="wolverine" data-required-gmat="30">
+      <img src="images/wolverine.jpg" alt="Marvel's Wolverine">
+      <div class="content">
+        <h3>Marvel's Wolverine</h3>
+        <p>Action-packed game inspired by Marvel's Wolverine and brutal close combat.</p>
+        <div class="game-lock-indicator" style="display: none;">🔒 Locked</div>
+        <div class="game-unlock-indicator" style="display: none;">✅ Unlocked</div>
+        <div class="bottom">
+          <span>0.03 ETH · Requires 30 GMAT</span>
+          <button class="play-game-btn" data-game="wolverine" data-required-gmat="30" disabled>
+            PLAY GAME
+          </button>
         </div>
       </div>
+    </div>
 
 
 
@@ -138,20 +165,11 @@
   </div>
 </section>
 
-<!-- CREATE CAMPAIGN -->
-<section class="games">
-  <h2>Create Campaign</h2>
-
-  <input id="title" placeholder="Game title">
-  <input id="goal" placeholder="Goal (ETH)">
-  <input id="duration" placeholder="Duration (seconds)">
-  <button id="createCampaignBtn">Create Campaign</button>
-</section>
-
 <footer class="footer">
   GoldMine Early Access Platform · Ethereum Testnet Only
 </footer>
 
-<script src="app.js"></script>
+<script src="utils.js"></script>
+<script src="games.js"></script>
 </body>
 </html>

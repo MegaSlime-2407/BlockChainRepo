@@ -1,0 +1,16 @@
+---
+description: Use repository owner identity for git commits; never Cursor Agent
+alwaysApply: true
+---
+
+# Git Commits – Use Repository Owner Identity
+
+When making git commits in this project:
+
+- **Never** set the commit author to "Cursor Agent", "Cursor", "AI", or any bot/assistant identity.
+- **Always** use the repository owner's identity for author and committer:
+  - Run `git config user.name` and `git config user.email` in the project to get the configured identity.
+  - Use that name and email for any commits (e.g. when suggesting commit messages or when the user runs commits from Cursor).
+- If you are asked to run `git commit`, use the existing git config; do not override with an agent or bot identity.
+
+The human repository owner should be the only contributor listed for commits in this project.
