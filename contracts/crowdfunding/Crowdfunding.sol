@@ -40,7 +40,7 @@ contract Crowdfunding {
         require(totalRaised >= goal, "Goal not reached");
 
         bool ok = gmt.transfer(owner, totalRaised);
-        require(ok, "transfer failed");
+        require(ok,"transfer failed");
     }
 
     function refund() external {
