@@ -7,6 +7,7 @@ This is my project for the blockchain course
 npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.js --network localhost
+npx hardhat run scripts/deploy-nft.js --network localhost
 npx hardhat run scripts/deploy-lending.js --network localhost
 ```
 ## Re-entrancy exploit
